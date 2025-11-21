@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int maxSpeed;
 
     [SerializeField] private int damage;
+    [SerializeField] private GameObject ExplosionParticle;
 
     private float speed;
 
@@ -28,8 +29,15 @@ public class Enemy : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            print("Enemy hit Player");
             Player.instance.TakeDamage(damage);
+            Destroy(gameObject);
+            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
+        }
+
+        if (collision.tag == "Ground")
+        {
+            Destroy(gameObject);
+            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
         }
     }
 }
